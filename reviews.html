@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews - HomeStock Express</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #2a6b3b;
+            --primary-light: #3a8b4b;
+            --secondary: #ff7b00;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #6c757d;
+            --border: #eaeaea;
+        }
+
+        body {
+            background-color: #fff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, rgba(42, 107, 59, 0.9), rgba(58, 139, 75, 0.8));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Reviews Grid */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .review-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--secondary);
+            transition: transform 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .review-rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+
+        .review-product {
+            display: inline-block;
+            background: var(--light);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* Review Form */
+        .review-form-container {
+            background: var(--light);
+            padding: 60px;
+            border-radius: 20px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .review-form {
+            max-width: 600px;
+            margin: 40px auto 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffc107;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .review-form-container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-boxes"></i>
+                <span>HomeStock Express</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="reviews.html" class="active">Reviews</a></li>
+                    <li><a href="partnerships.html">Partnerships</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+            <a href="cart.html" class="btn btn-primary">
+                <i class="fas fa-shopping-cart"></i> My Cart
+            </a>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>What Our Customers Say</h1>
+            <p>Trusted by over 15,000 households across Nairobi</p>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="container">
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number">4.8/5</div>
+                <p>Average Rating</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15K+</div>
+                <p>Happy Customers</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">98%</div>
+                <p>On-Time Delivery</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <p>Customer Support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="container">
+        <h2 style="text-align: center; color: var(--primary); margin: 60px 0 40px;">Recent Customer Reviews</h2>
+        
+        <div class="reviews-grid">
+            <!-- Review 1 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">SM</div>
+                        <div>
+                            <h3>Sarah M.</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Karen, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <h4>Life Saver for Busy Moms!</h4>
+                <p>"As a working mom with two kids, I can't tell you how many times HomeStock Express has saved me from last-minute supermarket runs. Ordered dish soap and laundry detergent at 2 PM, delivered by 5 PM. The delivery person was so polite!"</p>
+                <div class="review-product">
+                    <i class="fas fa-shopping-bag"></i> Dish Soap & Laundry Detergent
+                </div>
+                <p style="color: var(--gray); margin-top: 15px; font-size: 0.9rem;">Reviewed: 2 days ago</p>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">JK</div>
+                        <div>
+                            <h3>James K.</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Westlands, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                <h4>Great for Office Supplies</h4>
+                <p>"We use HomeStock for our 20-person office. Their B2B bulk ordering is fantastic - we get toilet paper, hand soap, and cleaning supplies delivered every Monday. Saves us so much time and the pricing is better than supermarkets."</p>
+                <div class="review-product">
+                    <i class="fas fa-building"></i> B2B Office Order
+                </div>
+                <p style="color: var(--gray); margin-top: 15px; font-size: 0.9rem;">Reviewed: 1 week ago</p>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">LW</div>
+                        <div>
+                            <h3>Lisa W.</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Kileleshwa, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <h4>Order for Elderly Parents</h4>
+                <p>"I live in the UK but order for my elderly parents in Nairobi. The delivery team is so kind - they even help bring items inside. Payment via M-Pesa is easy from abroad. Gives me peace of mind knowing my parents won't run out of essentials."</p>
+                <div class="review-product">
+                    <i class="fas fa-heart"></i> Monthly Essentials Bundle
+                </div>
+                <p style="color: var(--gray); margin-top: 15px; font-size: 0.9rem;">Reviewed: 2 weeks ago</p>
+            </div>
+
+            <!-- Review 4 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">PO</div>
+                        <div>
+                            <h3>Peter O.</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Langata, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <h4>Restaurant Owner Approved</h4>
+                <p>"Running a restaurant means we can't run out of cleaning supplies. HomeStock's commercial-grade products are excellent. Their WhatsApp support is super responsive - I just send a list and they confirm delivery within hours."</p>
+                <div class="review-product">
+                    <i class="fas fa-utensils"></i> Commercial Cleaning Supplies
+                </div>
+                <p style="color: var(--gray); margin-top: 15px; font-size: 0.9rem;">Reviewed: 3 weeks ago</p>
+            </div>
+
+            <!-- Review 5 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">MW</div>
+                        <div>
+                            <h3>Michael W.</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">CBD, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                </div>
+                </div>
+                <h4>Emergency Delivery Saved Event</h4>
+                <p>"Was hosting 50 people for a birthday party and realized we were out of toilet paper and hand soap at 6 PM! Thought we were doomed, but HomeStock delivered within 90 minutes. Customer service called to confirm and even threw in some air freshener samples!"</p>
+                <div class="review-product">
+                    <i class="fas fa-gift"></i> Party Essentials
+                </div>
+                <p style="color: var(--gray); margin-top: 15px; font-size: 0.9rem;">Reviewed: 1 month ago</p>
+            </div>
+
+            <!-- Review 6 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">AN</div>
+                        <div>
+                            <h3>Alice N.</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Kilimani, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                <h4>Love the Eco-Friendly Options</h4>
+                <p>"Finally found a delivery service that carries sustainable products! The bamboo toothbrushes and biodegradable trash bags are amazing quality. Prices are reasonable and delivery is always on time. My whole apartment building now uses HomeStock!"</p>
+                <div class="review-product">
+                    <i class="fas fa-leaf"></i> Eco-Friendly Products
+                </div>
+                <p style="color: var(--gray); margin-top: 15px; font-size: 0.9rem;">Reviewed: 1 month ago</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Review Form -->
+    <section class="container">
+        <div class="review-form-container">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Share Your Experience</h2>
+            <p>Tell us about your HomeStock Express experience</p>
+            
+            <form class="review-form" id="reviewForm">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" class="form-control" id="reviewerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Your Location (Nairobi Area)</label>
+                    <input type="text" class="form-control" id="reviewerLocation" placeholder="e.g., Westlands, Karen, CBD" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Products Ordered</label>
+                    <input type="text" class="form-control" id="productsOrdered" placeholder="e.g., Dish Soap, Laundry Detergent" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Your Rating</label>
+                    <div class="rating-stars">
+                        <span class="star" onclick="setRating(1)">★</span>
+                        <span class="star" onclick="setRating(2)">★</span>
+                        <span class="star" onclick="setRating(3)">★</span>
+                        <span class="star" onclick="setRating(4)">★</span>
+                        <span class="star" onclick="setRating(5)">★</span>
+                    </div>
+                    <input type="hidden" id="rating" value="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Your Review</label>
+                    <textarea class="form-control" id="reviewText" rows="4" placeholder="Tell us about your experience..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">
+                    <i class="fas fa-paper-plane"></i> Submit Review
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Info -->
+    <section class="container" style="text-align: center; margin: 80px 0;">
+        <h3 style="color: var(--primary); margin-bottom: 30px;">Questions? Contact Us</h3>
+        <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 40px;">
+            <div>
+                <i class="fas fa-phone" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                <p><strong>Call:</strong> +254 712 345 678</p>
+            </div>
+            <div>
+                <i class="fab fa-whatsapp" style="font-size: 2rem; color: #25D366; margin-bottom: 15px;"></i>
+                <p><strong>WhatsApp:</strong> +254 712 345 678</p>
+            </div>
+            <div>
+                <i class="fas fa-envelope" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                <p><strong>Email:</strong> help@homestockexpress.co.ke</p>
+            </div>
+        </div>
+        
+        <a href="index.html#products" class="btn btn-primary" style="padding: 15px 40px;">
+            <i class="fas fa-shopping-bag"></i> Shop Now
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-column">
+                <h3>HomeStock Express</h3>
+                <p>Fast home essentials delivery across Nairobi</p>
+                <div style="margin-top: 15px; display: flex; gap: 15px;">
+                    <a href="#" style="color: white;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="color: white;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: white;"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="partnerships.html">Partnerships</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Need Help?</h3>
+                <ul>
+                    <li><a href="cart.html">My Cart</a></li>
+                    <li><a href="checkout.html">Checkout Help</a></li>
+                    <li><a href="#">Delivery Areas</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                    <li><i class="fas fa-phone"></i> +254 712 345 678</li>
+                    <li><i class="fab fa-whatsapp"></i> +254 712 345 678</li>
+                    <li><i class="fas fa-envelope"></i> help@homestockexpress.co.ke</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container footer-bottom">
+            <p>&copy; 2023 HomeStock Express. All rights reserved. | <a href="admin.html" style="color: #aaa;">Admin Login</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Star rating system
+        let selectedRating = 0;
+        
+        function setRating(rating) {
+            selectedRating = rating;
+            document.getElementById('rating').value = rating;
+            
+            // Update star display
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                    star.style.color = '#ffc107';
+                } else {
+                    star.classList.remove('active');
+                    star.style.color = '#ddd';
+                }
+            });
+        }
+        
+        // Initialize stars
+        document.querySelectorAll('.star').forEach((star, index) => {
+            star.addEventListener('mouseover', function() {
+                const hoverRating = index + 1;
+                const stars = document.querySelectorAll('.star');
+                stars.forEach((s, i) => {
+                    if (i < hoverRating) {
+                        s.style.color = '#ffc107';
+                    } else {
+                        s.style.color = '#ddd';
+                    }
+                });
+            });
+            
+            star.addEventListener('mouseout', function() {
+                const stars = document.querySelectorAll('.star');
+                stars.forEach((s, i) => {
+                    if (i < selectedRating) {
+                        s.style.color = '#ffc107';
+                    } else {
+                        s.style.color = '#ddd';
+                    }
+                });
+            });
+        });
+        
+        // Form submission
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('reviewerName').value;
+            const rating = document.getElementById('rating').value;
+            
+            if (rating === "0") {
+                alert('Please select a star rating');
+                return;
+            }
+            
+            // In a real app, this would send to server
+            // For demo, just show success message
+            alert(`Thank you ${name} for your ${rating}-star review! It has been submitted.`);
+            
+            // Reset form
+            this.reset();
+            setRating(0);
+        });
+        
+        // Load saved reviews from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedReviews = JSON.parse(localStorage.getItem('customerReviews')) || [];
+            // Could display saved reviews here
+        });
+    </script>
+</body>
+</html>

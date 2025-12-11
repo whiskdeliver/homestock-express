@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Partnerships - HomeStock Express</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #2a6b3b;
+            --primary-light: #3a8b4b;
+            --secondary: #ff7b00;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #6c757d;
+            --border: #eaeaea;
+        }
+
+        body {
+            background-color: #fff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, rgba(42, 107, 59, 0.9), rgba(58, 139, 75, 0.8));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* Partnership Cards */
+        .partnership-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .partnership-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+            border-top: 5px solid var(--primary);
+        }
+
+        .partnership-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .partnership-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: var(--light);
+            padding: 80px 0;
+            margin: 80px 0;
+            border-radius: 20px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        /* Current Partners */
+        .partners-showcase {
+            margin: 80px 0;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .partner-logo {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            border: 1px solid var(--border);
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 80px 0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-boxes"></i>
+                <span>HomeStock Express</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="partnerships.html" class="active">Partnerships</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+            <a href="cart.html" class="btn btn-primary">
+                <i class="fas fa-shopping-cart"></i> Cart
+            </a>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Grow With HomeStock Express</h1>
+            <p>Partner with Nairobi's fastest-growing home essentials delivery service</p>
+        </div>
+    </section>
+
+    <!-- Partnership Types -->
+    <section class="container">
+        <h2 style="text-align: center; color: var(--primary); margin-bottom: 40px;">Partnership Opportunities</h2>
+        
+        <div class="partnership-cards">
+            <!-- Card 1 -->
+            <div class="partnership-card">
+                <div class="partnership-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3>B2B Bulk Orders</h3>
+                <p>Special pricing for offices, schools, hospitals, and institutions. Minimum order: KSh 15,000.</p>
+                <div style="text-align: left; margin: 25px 0;">
+                    <p><strong>Benefits:</strong></p>
+                    <ul style="list-style: none; margin-top: 10px;">
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Volume discounts (10-25%)</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Scheduled weekly deliveries</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Custom invoicing & receipts</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Dedicated account manager</li>
+                    </ul>
+                </div>
+                <p style="color: var(--gray); font-size: 0.9rem; margin-top: 20px;">
+                    <strong>Ideal for:</strong> Companies with 20+ employees, schools, clinics, restaurants
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="partnership-card">
+                <div class="partnership-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Supplier Partnerships</h3>
+                <p>Sell your products through our platform. Reach 15,000+ households instantly.</p>
+                <div style="text-align: left; margin: 25px 0;">
+                    <p><strong>Benefits:</strong></p>
+                    <ul style="list-style: none; margin-top: 10px;">
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Fast onboarding (48 hours)</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Regular purchase orders</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Brand visibility & marketing</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Timely payments (14 days)</li>
+                    </ul>
+                </div>
+                <p style="color: var(--gray); font-size: 0.9rem; margin-top: 20px;">
+                    <strong>Ideal for:</strong> Local manufacturers, distributors, eco-friendly brands
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="partnership-card">
+                <div class="partnership-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3>Logistics Partnerships</h3>
+                <p>Join our delivery network. Earn reliable income with our guaranteed volume.</p>
+                <div style="text-align: left; margin: 25px 0;">
+                    <p><strong>Benefits:</strong></p>
+                    <ul style="list-style: none; margin-top: 10px;">
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Technology integration</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Volume guarantees</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Training & equipment support</li>
+                        <li><i class="fas fa-check" style="color: var(--primary);"></i> Performance incentives</li>
+                    </ul>
+                </div>
+                <p style="color: var(--gray); font-size: 0.9rem; margin-top: 20px;">
+                    <strong>Ideal for:</strong> Delivery service providers, bike/car owners, logistics companies
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 style="text-align: center; color: var(--primary); margin-bottom: 20px;">Why Partner With Us?</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">Join Nairobi's most trusted home essentials delivery platform</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;"></i>
+                    <h3>Growing Customer Base</h3>
+                    <p>15,000+ households and growing 20% monthly. Reach customers instantly.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-mobile-alt" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;"></i>
+                    <h3>Technology Platform</h3>
+                    <p>Real-time ordering, inventory management, and tracking systems.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;"></i>
+                    <h3>Reliable Payments</h3>
+                    <p>Consistent 14-day payment terms. No delayed payments.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-database" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;"></i>
+                    <h3>Market Insights</h3>
+                    <p>Data-driven demand forecasting and product recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Partners -->
+    <section class="container partners-showcase">
+        <h2 style="text-align: center; color: var(--primary); margin-bottom: 20px;">Our Current Partners</h2>
+        <p style="text-align: center; color: var(--gray); margin-bottom: 40px;">Trusted by leading businesses in Nairobi</p>
+        
+        <div class="partners-grid">
+            <div class="partner-logo">CleanPro Supplies</div>
+            <div class="partner-logo">EcoHome Kenya</div>
+            <div class="partner-logo">Nairobi Office Solutions</div>
+            <div class="partner-logo">GreenLife Products</div>
+            <div class="partner-logo">Swift Deliveries</div>
+            <div class="partner-logo">KitchenEssentials KE</div>
+        </div>
+    </section>
+
+    <!-- Partnership Form -->
+    <section class="container">
+        <div class="form-container">
+            <h2 style="text-align: center; color: var(--primary); margin-bottom: 40px;">Start Your Partnership</h2>
+            
+            <form id="partnershipForm">
+                <div class="form-group">
+                    <label>Partnership Type *</label>
+                    <select class="form-control" id="partnershipType" required>
+                        <option value="">Select partnership type</option>
+                        <option value="b2b">B2B Bulk Orders</option>
+                        <option value="supplier">Supplier/Manufacturer</option>
+                        <option value="logistics">Logistics/Delivery Partner</option>
+                        <option value="corporate">Corporate Gifting</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Business/Company Name *</label>
+                        <input type="text" class="form-control" id="companyName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Person *</label>
+                        <input type="text" class="form-control" id="contactPerson" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" class="form-control" id="contactEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" class="form-control" id="contactPhone" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Business Location *</label>
+                    <input type="text" class="form-control" id="businessLocation" placeholder="Nairobi area or region" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Estimated Monthly Volume *</label>
+                    <select class="form-control" id="monthlyVolume" required>
+                        <option value="">Select volume</option>
+                        <option value="small">Under KSh 50,000</option>
+                        <option value="medium">KSh 50,000 - 200,000</option>
+                        <option value="large">KSh 200,000 - 500,000</option>
+                        <option value="enterprise">Over KSh 500,000</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Tell us about your business/partnership idea *</label>
+                    <textarea class="form-control" id="partnershipDetails" rows="4" placeholder="Describe your business, products, or partnership idea..." required></textarea>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <button type="submit" class="btn btn-primary" style="padding: 15px 50px; font-size: 1.1rem;">
+                        <i class="fas fa-paper-plane"></i> Submit Partnership Inquiry
+                    </button>
+                </div>
+            </form>
+            
+            <div style="margin-top: 40px; padding: 20px; background: var(--light); border-radius: 8px;">
+                <h4><i class="fas fa-clock"></i> What Happens Next?</h4>
+                <p style="margin-top: 10px; color: var(--gray);">
+                    1. We'll contact you within 24 hours<br>
+                    2. Schedule a meeting/call to discuss details<br>
+                    3. Partnership agreement & onboarding<br>
+                    4. Start growing together!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact for Partnerships -->
+    <section class="container" style="text-align: center; margin: 80px 0;">
+        <h3 style="color: var(--primary); margin-bottom: 30px;">Partnerships Team Contact</h3>
+        <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 40px;">
+            <div>
+                <i class="fas fa-user-tie" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                <p><strong>James Ochieng</strong></p>
+                <p>Head of Partnerships</p>
+                <p style="color: var(--gray);">+254 712 345 678</p>
+            </div>
+            <div>
+                <i class="fas fa-envelope" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                <p><strong>Email</strong></p>
+                <p>partnerships@homestockexpress.co.ke</p>
+                <p style="color: var(--gray);">Business hours: 8AM-6PM</p>
+            </div>
+            <div>
+                <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                <p><strong>Visit Us</strong></p>
+                <p>Westlands, Nairobi</p>
+                <p style="color: var(--gray);">By appointment only</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-column">
+                <h3>HomeStock Express</h3>
+                <p>Nairobi's trusted home essentials delivery service</p>
+                <div style="margin-top: 15px; display: flex; gap: 15px;">
+                    <a href="#" style="color: white;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="color: white;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: white;"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Business Services</h3>
+                <ul>
+                    <li><a href="partnerships.html">B2B Bulk Orders</a></li>
+                    <li><a href="partnerships.html">Supplier Application</a></li>
+                    <li><a href="partnerships.html">Delivery Partnerships</a></li>
+                    <li><a href="#">Corporate Accounts</a></li>
+                    <li><a href="#">API Documentation</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Partnerships</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +254 712 345 678</li>
+                    <li><i class="fab fa-whatsapp"></i> +254 712 345 678</li>
+                    <li><i class="fas fa-envelope"></i> partnerships@homestockexpress.co.ke</li>
+                    <li><i class="fas fa-clock"></i> Mon-Fri: 8AM-6PM</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Payment Info</h3>
+                <ul>
+                    <li><i class="fas fa-money-bill-wave"></i> M-Pesa: 0712 345 678</li>
+                    <li><i class="fas fa-university"></i> Bank: Equity Bank</li>
+                    <li><i class="fas fa-credit-card"></i> Account: 1234567890</li>
+                    <li><i class="fas fa-file-invoice"></i> Invoice upon request</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container footer-bottom">
+            <p>&copy; 2023 HomeStock Express. All rights reserved. | Business Registration: PVT-2020-12345</p>
+        </div>
+    </footer>
+
+    <script>
+        // Form submission
+        document.getElementById('partnershipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const companyName = document.getElementById('companyName').value;
+            const partnershipType = document.getElementById('partnershipType').value;
+            
+            // In a real app, this would send to server
+            // For demo, show success message
+            const typeNames = {
+                'b2b': 'B2B Bulk Orders',
+                'supplier': 'Supplier Partnership',
+                'logistics': 'Logistics Partnership',
+                'corporate': 'Corporate Gifting',
+                'other': 'Partnership'
+            };
+            
+            alert(`Thank you ${companyName}! Your ${typeNames[partnershipType]} inquiry has been submitted. Our partnerships team will contact you within 24 hours.`);
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Form validation
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '' && this.hasAttribute('required')) {
+                    this.style.borderColor = '#ff4444';
+                } else {
+                    this.style.borderColor = 'var(--border)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
