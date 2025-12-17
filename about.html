@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - HomeStock Express</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* MODERN STYLE MATCHING YOUR WEBSITE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #2a6b3b;
+            --primary-light: #3a8b4b;
+            --secondary: #ff7b00;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #6c757d;
+            --border: #eaeaea;
+        }
+
+        body {
+            background-color: #fff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 107, 59, 0.2);
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(135deg, rgba(42, 107, 59, 0.95), rgba(58, 139, 75, 0.9)), url('https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .section {
+            margin: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Story Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 60px auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            padding-right: 50%;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            border-left: 4px solid var(--primary);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+        }
+
+        .timeline-year {
+            position: absolute;
+            top: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-year {
+            right: -100px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            left: -100px;
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .value-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .value-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+        }
+
+        .team-info {
+            padding: 30px;
+        }
+
+        .team-info h3 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .team-info .role {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin: 80px 0;
+            border-radius: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 20px;
+            margin: 80px 0;
+        }
+
+        .cta-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                padding-left: 60px !important;
+                padding-right: 0 !important;
+            }
+            
+            .timeline-year {
+                left: -40px !important;
+                right: auto !important;
+            }
+            
+            .timeline-content {
+                border-left: 4px solid var(--primary) !important;
+                border-right: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-boxes"></i>
+                <span>HomeStock Express</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="active">About Us</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="partnerships.html">Partnerships</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                </ul>
+            </nav>
+            <a href="index.html#products" class="btn btn-primary">
+                <i class="fas fa-store"></i> Shop Now
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Our Story & Mission</h1>
+            <p>Delivering home essentials with speed, reliability, and care since 2020</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <div class="container">
+        <!-- Story Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-book-open"></i> Our Journey</h2>
+                <p>From humble beginnings to Nairobi's trusted home essentials delivery service</p>
+            </div>
+
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+                <p style="font-size: 1.2rem; line-height: 1.8;">
+                    HomeStock Express was born out of a simple need: to make home essentials easily accessible 
+                    to busy Nairobi families. What started as a small operation with just 3 products and 1 delivery 
+                    bike during the pandemic has grown into a trusted service delivering to thousands of happy customers.
+                </p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h3>Humble Beginnings</h3>
+                        <p>Launched with just 3 essential products. Operated from a small apartment in Nairobi with one delivery bike. Served our first 50 customers during the pandemic.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-content">
+                        <h3>Rapid Growth</h3>
+                        <p>Expanded to 50+ products. Added M-Pesa payment integration. Reached 1,000+ customers. Expanded delivery area to cover all of Nairobi.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <h3>Service Enhancement</h3>
+                        <p>Launched same-day delivery guarantee. Introduced mobile app. Partnered with 10+ local suppliers. Achieved 4.8/5 customer rating.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3>Market Leadership</h3>
+                        <p>Served 15,000+ customers. Expanded team to 20+ employees. Introduced sustainable packaging. Won "Best Home Delivery Service" award.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-bullseye"></i> Our Purpose</h2>
+                <p>Driven by values that guide everything we do</p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Our Mission</h3>
+                    <p>To deliver essential household products with unmatched speed and reliability, making daily life easier for Nairobi families.</p>
+                </div>
+
+                <div class="value-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Our Vision</h3>
+                    <p>To become Kenya's most trusted and preferred home essentials delivery service, setting the standard for convenience and customer care.</p>
+                </div>
+
+                <div class="value-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Our Values</h3>
+                    <p>Reliability, Speed, Quality, Customer Care, and Community Support guide every decision we make and every delivery we handle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container">
+                <h2 style="margin-bottom: 30px; font-size: 2.5rem;">By The Numbers</h2>
+                <p style="font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto 40px;">
+                    Our impact in numbers speaks to our commitment to serving Nairobi families
+                </p>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>15,000+</h3>
+                        <p>Happy Customers</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>98%</h3>
+                        <p>On-time Delivery Rate</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>4.8/5</h3>
+                        <p>Customer Rating</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>3-6</h3>
+                        <p>Hours Delivery Time</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Meet Our Leadership</h2>
+                <p>The dedicated team behind HomeStock Express</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>David Mwangi</h3>
+                        <p class="role">CEO & Founder</p>
+                        <p>Founded HomeStock Express with a vision to simplify home essentials shopping for busy Nairobi families.</p>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>Sarah Kamau</h3>
+                        <p class="role">Operations Director</p>
+                        <p>Ensures every delivery reaches our customers on time and in perfect condition.</p>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user-headset"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>James Omondi</h3>
+                        <p class="role">Customer Experience</p>
+                        <p>Leads our 24/7 support team to ensure every customer has an amazing experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Experience Convenient Delivery?</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Join thousands of Nairobi families who trust us for their home essentials
+                </p>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <a href="index.html#products" class="btn btn-primary" style="padding: 15px 40px;">
+                        <i class="fas fa-store"></i> Shop Products
+                    </a>
+                    <a href="partnerships.html" class="btn" style="background: white; color: var(--primary); border: 2px solid var(--primary); padding: 15px 40px;">
+                        <i class="fas fa-handshake"></i> Partner With Us
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-column">
+                <h3>HomeStock Express</h3>
+                <p>Your trusted partner for fast home essentials delivery across Nairobi. Quality products, reliable service.</p>
+                <div style="margin-top: 15px; display: flex; gap: 15px;">
+                    <a href="#" style="color: white;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="color: white;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: white;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: white;"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <p style="color: #888; font-size: 0.9rem; margin-top: 10px;">
+                    <i class="fas fa-money-bill-wave"></i> All prices in Kenyan Shillings
+                </p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="partnerships.html">Partnerships</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="cart.html">My Cart</a></li>
+                    <li><a href="checkout.html">Checkout Help</a></li>
+                    <li><a href="#">Delivery Areas</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                    <li><i class="fas fa-phone"></i> +254 712 345 678</li>
+                    <li><i class="fab fa-whatsapp"></i> +254 712 345 678</li>
+                    <li><i class="fas fa-envelope"></i> help@homestockexpress.co.ke</li>
+                    <li><i class="fab fa-m-pesa"></i> Pay to: 0708592532</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container footer-bottom">
+            <p>&copy; 2023 HomeStock Express. All rights reserved. | All prices in Kenyan Shillings (KES)</p>
+        </div>
+    </footer>
+</body>
+</html>
