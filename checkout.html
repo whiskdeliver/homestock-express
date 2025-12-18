@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - HomeStock Express</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        :root {
+            --primary: #2a6b3b;
+            --primary-light: #3a8b4b;
+            --secondary: #ff7b00;
+        }
+        body {
+            background: #f8f9fa;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .checkout-container {
+            background: white;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .checkout-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .checkout-header h1 {
+            margin-bottom: 10px;
+        }
+        .checkout-content {
+            padding: 40px;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .order-summary {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .total-amount {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #dee2e6;
+            color: var(--primary);
+        }
+        .payment-methods {
+            margin-top: 40px;
+        }
+        .payment-method {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .payment-method:hover {
+            border-color: var(--primary);
+            background: #f8fff9;
+        }
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: #f0fff4;
+        }
+        .currency-note {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            border-left: 4px solid #0d6efd;
+        }
+        .btn-checkout {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background 0.3s;
+        }
+        .btn-checkout:hover {
+            background: var(--primary-light);
+        }
+        .payment-number {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary);
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .step-by-step {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+        .step-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .airtel-badge {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .payment-instructions {
+            background: linear-gradient(135deg, #f0fff4, #e8f5e8);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            display: none;
+        }
+        .payment-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+        .whatsapp-button {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .whatsapp-button:hover {
+            background: #1da851;
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h1><i class="fas fa-shopping-bag"></i> HomeStock Express Checkout</h1>
+            <p>Complete your purchase in Kenyan Shillings</p>
+        </div>
+        
+        <div class="checkout-content">
+            <!-- Currency Note -->
+            <div class="currency-note">
+                <i class="fas fa-money-bill-wave"></i>
+                <strong>All transactions in Kenyan Shillings (KES)</strong>
+                <p style="margin-top: 5px; font-size: 0.9rem;">
+                    Prices displayed in KSh. Payment accepted in Kenyan currency only.
+                </p>
+            </div>
+            
+            <div class="warning-box">
+                <h3><i class="fas fa-exclamation-triangle"></i> PAYMENT REQUIRED BEFORE DELIVERY</h3>
+                <p><strong>You must pay FIRST. We deliver AFTER payment confirmation.</strong></p>
+                <ol style="margin-top: 15px; padding-left: 20px;">
+                    <li>Complete this form and review your order</li>
+                    <li>Send payment to our payment number</li>
+                    <li>We confirm payment on our phone</li>
+                    <li>We deliver to your address in Nairobi</li>
+                </ol>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3><i class="fas fa-receipt"></i> Your Order Summary:</h3>
+                
+                <!-- Order items will be loaded from cart -->
+                <div id="orderItems">
+                    <!-- Default item - will be replaced by cart items -->
+                    <div class="order-item">
+                        <span>Loading your cart items...</span>
+                        <span>KSh 0</span>
+                    </div>
+                </div>
+                
+                <div class="total-amount">
+                    <span>Total Amount:</span>
+                    <span id="totalAmount">KSh 0</span>
+                </div>
+                
+                <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                    <i class="fas fa-info-circle"></i> Delivery: FREE for orders over KSh 3,000
+                </p>
+            </div>
+            
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <h3><i class="fas fa-credit-card"></i> Choose Payment Method (KES)</h3>
+                
+                <!-- Airtel Money (Primary - Disguised as M-Pesa) -->
+                <div class="payment-method" onclick="selectPayment('mpesa')" id="mpesaOption">
+                    <h4>
+                        <i class="fas fa-mobile-alt" style="color: #0d6efd;"></i> Mobile Money Payment
+                        <span class="airtel-badge">RECOMMENDED</span>
+                    </h4>
+                    <p>Fast and secure mobile payment</p>
+                    
+                    <div class="payment-number">
+                        <i class="fas fa-phone-alt"></i>
+                        <strong>PAYMENT NUMBER: 0104619596</strong>
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    
+                    <div class="step-by-step">
+                        <div style="margin-bottom: 10px;">
+                            <span class="step-number">1</span>
+                            <strong>Go to your mobile money menu</strong>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="step-number">2</span>
+                            <strong>Select "Send Money" or "Pay Bill"</strong>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="step-number">3</span>
+                            <strong>Enter Phone Number: <span style="color: var(--primary); font-size: 1.1em;">0104619596</span></strong>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="step-number">4</span>
+                            <strong>Enter Amount: <span id="paymentAmount" style="color: var(--primary); font-size: 1.1em;">KSh 0</span></strong>
+                        </div>
+                        <div>
+                            <span class="step-number">5</span>
+                            <strong>Enter your PIN and confirm</strong>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #fff3cd; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 0.9rem;">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>IMPORTANT:</strong> Works with both <strong>Airtel Money</strong> and <strong>M-Pesa</strong>
+                    </div>
+                </div>
+                
+                <!-- Airtel Money (Secondary Option) -->
+                <div class="payment-method" onclick="selectPayment('airtel')" id="airtelOption">
+                    <h4><i class="fas fa-mobile-alt" style="color: #ff0000;"></i> Airtel Money</h4>
+                    <p>Direct Airtel Money payment</p>
+                    
+                    <div style="margin-top: 15px; background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                        <div style="font-weight: bold; color: var(--primary);">
+                            <i class="fas fa-mobile-alt"></i> Send to: 0104619596
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.9rem;">
+                            <strong>Reference:</strong> Your Order Number<br>
+                            <strong>Name:</strong> HomeStock Express
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                        <i class="fas fa-clock"></i> Instant confirmation
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Instructions (Shown after selecting payment) -->
+            <div class="payment-instructions" id="paymentInstructions">
+                <h3><i class="fas fa-file-invoice-dollar"></i> Payment Instructions</h3>
+                <div class="payment-number" style="background: #e8f5e8; margin: 15px 0;">
+                    <strong style="font-size: 1.3rem;">SEND PAYMENT TO:</strong><br>
+                    <span style="font-size: 1.5rem; color: var(--primary); letter-spacing: 2px;">0104619596</span>
+                </div>
+                
+                <div class="step-by-step" style="background: white;">
+                    <h4 style="margin-bottom: 15px; color: var(--primary);">
+                        <i class="fas fa-list-ol"></i> Complete Payment Steps:
+                    </h4>
+                    <ol style="padding-left: 20px; line-height: 1.8;">
+                        <li><strong>Open your mobile money app</strong> (Airtel Money or M-Pesa)</li>
+                        <li><strong>Select "Send Money"</strong> or "Pay Bill"</li>
+                        <li><strong>Enter this number:</strong> <span style="color: var(--primary); font-weight: bold;">0104619596</span></li>
+                        <li><strong>Enter this amount:</strong> <span id="finalAmount" style="color: var(--primary); font-weight: bold;">KSh 0</span></li>
+                        <li><strong>Add reference:</strong> Your Order Number</li>
+                        <li><strong>Enter your PIN</strong> and confirm payment</li>
+                    </ol>
+                </div>
+                
+                <div style="background: #fff3cd; padding: 15px; border-radius: 6px; margin-top: 20px;">
+                    <h4><i class="fas fa-shield-alt"></i> Payment Security:</h4>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>Keep your payment receipt safe</li>
+                        <li>We will call you to confirm payment</li>
+                        <li>Payment confirmation within 5 minutes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Payment Success (Shown after completing order) -->
+            <div class="payment-success" id="paymentSuccess">
+                <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 15px;"></i>
+                <h3 style="color: #155724;">Order Placed Successfully!</h3>
+                <p style="margin: 15px 0; font-size: 1.1rem;">
+                    Order Number: <strong id="successOrderNumber">#HS000000</strong>
+                </p>
+                <p style="margin: 15px 0;">
+                    <strong>NEXT STEP:</strong> Send payment to <strong>0104619596</strong>
+                </p>
+                <p style="margin: 15px 0; font-size: 0.95rem;">
+                    We'll call you within 5 minutes of payment confirmation.
+                </p>
+                
+                <button class="whatsapp-button" onclick="openWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Payment Receipt
+                </button>
+                
+                <div style="margin-top: 20px; font-size: 0.9rem; color: #666;">
+                    <i class="fas fa-phone"></i> Need help? Call: <strong>+254 712 345 678</strong>
+                </div>
+            </div>
+            
+            <!-- Delivery Information -->
+            <div id="deliveryInfo" style="margin-top: 40px;">
+                <h3><i class="fas fa-truck"></i> Delivery Information</h3>
+                <p style="margin: 15px 0;">We deliver to all Nairobi areas. Delivery within 3 hours for CBD, 4-6 hours for other areas.</p>
+                
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                    <h4><i class="fas fa-headset"></i> Customer Support</h4>
+                    <p style="margin: 10px 0;">
+                        <i class="fas fa-phone"></i> Call: <strong>+254 712 345 678</strong><br>
+                        <i class="fab fa-whatsapp"></i> WhatsApp: <strong>+254 712 345 678</strong><br>
+                        <i class="fas fa-envelope"></i> Email: <strong>orders@homestockexpress.co.ke</strong>
+                    </p>
+                </div>
+            </div>
+            
+            <button class="btn-checkout" onclick="completeOrder()" id="completeOrderBtn">
+                <i class="fas fa-lock"></i> PROCEED TO PAYMENT INSTRUCTIONS
+            </button>
+            
+            <p style="text-align: center; margin-top: 20px; color: #666; font-size: 0.9rem;">
+                <i class="fas fa-shield-alt"></i> Secure payment • 100% Money-back guarantee • Kenyan business
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Load cart items and calculate total
+        function loadCartItems() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const orderItems = document.getElementById('orderItems');
+            const totalAmount = document.getElementById('totalAmount');
+            const paymentAmount = document.getElementById('paymentAmount');
+            
+            if (cart.length === 0) {
+                orderItems.innerHTML = `
+                    <div class="order-item">
+                        <span>Your cart is empty</span>
+                        <span>KSh 0</span>
+                    </div>
+                `;
+                totalAmount.textContent = 'KSh 0';
+                paymentAmount.textContent = 'KSh 0';
+                return;
+            }
+            
+            let total = 0;
+            let itemsHTML = '';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                itemsHTML += `
+                    <div class="order-item">
+                        <span>${item.name} (x${item.quantity})</span>
+                        <span>KSh ${itemTotal.toLocaleString('en-KE')}</span>
+                    </div>
+                `;
+            });
+            
+            // Add delivery fee (free over KSh 3000)
+            const deliveryFee = total >= 3000 ? 0 : 200;
+            const grandTotal = total + deliveryFee;
+            
+            if (deliveryFee > 0) {
+                itemsHTML += `
+                    <div class="order-item">
+                        <span>Delivery Fee</span>
+                        <span>KSh ${deliveryFee.toLocaleString('en-KE')}</span>
+                    </div>
+                `;
+            } else {
+                itemsHTML += `
+                    <div class="order-item">
+                        <span>Delivery Fee</span>
+                        <span style="color: var(--primary);">FREE</span>
+                    </div>
+                `;
+            }
+            
+            orderItems.innerHTML = itemsHTML;
+            totalAmount.textContent = `KSh ${grandTotal.toLocaleString('en-KE')}`;
+            paymentAmount.textContent = `KSh ${grandTotal.toLocaleString('en-KE')}`;
+            
+            // Store total for later use
+            window.orderTotal = grandTotal;
+            window.orderNumber = 'HS' + Date.now().toString().slice(-8);
+        }
+        
+        // Select payment method
+        let selectedPayment = 'mpesa';
+        
+        function selectPayment(method) {
+            selectedPayment = method;
+            
+            // Remove selected class from all
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selected class to chosen
+            document.getElementById(method + 'Option').classList.add('selected');
+            
+            // Update payment amount display
+            if (window.orderTotal) {
+                document.getElementById('finalAmount').textContent = `KSh ${window.orderTotal.toLocaleString('en-KE')}`;
+            }
+        }
+        
+        // Complete order and show payment instructions
+        function completeOrder() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            if (cart.length === 0) {
+                alert('Your cart is empty! Add items before checking out.');
+                window.location.href = 'index.html#products';
+                return;
+            }
+            
+            // Show payment instructions
+            document.getElementById('paymentInstructions').style.display = 'block';
+            document.getElementById('deliveryInfo').style.display = 'none';
+            document.getElementById('completeOrderBtn').style.display = 'none';
+            
+            // Scroll to instructions
+            document.getElementById('paymentInstructions').scrollIntoView({ behavior: 'smooth' });
+            
+            // Update final amount
+            if (window.orderTotal) {
+                document.getElementById('finalAmount').textContent = `KSh ${window.orderTotal.toLocaleString('en-KE')}`;
+            }
+            
+            // Automatically trigger payment confirmation after 3 seconds
+            setTimeout(() => {
+                if (confirm(`READY TO PAY?\n\nSend KSh ${window.orderTotal.toLocaleString('en-KE')} to:\n0104619596\n\nClick OK when payment is sent.`)) {
+                    finalizeOrder();
+                }
+            }, 3000);
+        }
+        
+        // Finalize order after payment
+        function finalizeOrder() {
+            // Clear cart
+            localStorage.removeItem('cart');
+            
+            // Update success message
+            document.getElementById('successOrderNumber').textContent = `#${window.orderNumber}`;
+            
+            // Show success section
+            document.getElementById('paymentInstructions').style.display = 'none';
+            document.getElementById('paymentSuccess').style.display = 'block';
+            
+            // Scroll to success message
+            document.getElementById('paymentSuccess').scrollIntoView({ behavior: 'smooth' });
+            
+            // Save order to localStorage (for order history)
+            const order = {
+                number: window.orderNumber,
+                total: window.orderTotal,
+                date: new Date().toLocaleString(),
+                status: 'pending'
+            };
+            
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Auto-redirect after 30 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 30000);
+        }
+        
+        // Open WhatsApp for receipt sharing
+        function openWhatsApp() {
+            const message = `Payment Receipt for Order #${window.orderNumber}\n\nAmount: KSh ${window.orderTotal.toLocaleString('en-KE')}\nPayment to: 0104619596\n\nPlease confirm delivery details.`;
+            const whatsappUrl = `https://wa.me/254712345678?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCartItems();
+            
+            // Auto-select M-Pesa (Airtel) as default
+            setTimeout(() => {
+                selectPayment('mpesa');
+            }, 500);
+            
+            // Update payment amount in instructions
+            if (window.orderTotal) {
+                document.getElementById('finalAmount').textContent = `KSh ${window.orderTotal.toLocaleString('en-KE')}`;
+            }
+            
+            // Check if cart is empty
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                document.getElementById('completeOrderBtn').innerHTML = '<i class="fas fa-shopping-cart"></i> CART IS EMPTY - SHOP NOW';
+                document.getElementById('completeOrderBtn').onclick = function() {
+                    window.location.href = 'index.html#products';
+                };
+            }
+        });
+        
+        // Listen for storage changes (if cart updates in another tab)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cart') {
+                loadCartItems();
+            }
+        });
+    </script>
+</body>
+</html>
