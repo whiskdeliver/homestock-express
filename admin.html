@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - HomeStock Express</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #2a6b3b;
+            --primary-light: #3a8b4b;
+            --secondary: #ff7b00;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #6c757d;
+            --border: #eaeaea;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Login Container */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .login-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            opacity: 0.9;
+        }
+
+        .login-form {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 107, 59, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 107, 59, 0.2);
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #c33;
+        }
+
+        /* Admin Panel (After Login) */
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .admin-nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .admin-nav a:hover {
+            background: #f0f9f0;
+            color: var(--primary);
+        }
+
+        .admin-nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 107, 59, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #ff8c00;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: #f0f9f0;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .dashboard h2 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 4px solid var(--primary);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Form Styles */
+        .admin-form {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .admin-title {
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-control label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control input,
+        .form-control select,
+        .form-control textarea {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control input:focus,
+        .form-control select:focus,
+        .form-control textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 107, 59, 0.1);
+        }
+
+        .form-control textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        /* File Upload Styles */
+        .file-upload-container {
+            position: relative;
+            margin-top: 5px;
+        }
+
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafafa;
+            text-align: center;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary);
+            background: #f8fff9;
+        }
+
+        .file-upload-label i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .file-upload-input {
+            display: none;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid var(--border);
+        }
+
+        .remove-image {
+            margin-top: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Products List */
+        .products-section {
+            margin-top: 40px;
+        }
+
+        .products-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .products-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .products-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .products-list::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .products-list::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        .product-item {
+            background: #fafafa;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 20px;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .product-item:hover {
+            background: #f0f9f0;
+            transform: translateX(5px);
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .product-info h4 {
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .product-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+
+        /* Live Status */
+        .live-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(42, 107, 59, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(42, 107, 59, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(42, 107, 59, 0); }
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #4caf50;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Status Messages */
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .product-image {
+                width: 150px;
+                height: 150px;
+                margin: 0 auto;
+            }
+            
+            .product-actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .admin-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .admin-actions .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Live Status Indicator -->
+    <div class="live-status" id="liveStatus" style="display: none;">
+        <span class="status-dot"></span>
+        <span>LIVE UPDATE MODE</span>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1><i class="fas fa-lock"></i> Admin Login</h1>
+                <p>HomeStock Express Product Management</p>
+            </div>
+            <div class="login-form">
+                <div class="error-message" id="loginError">
+                    <i class="fas fa-exclamation-circle"></i> Invalid username or password
+                </div>
+                
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" placeholder="Enter admin username" autocomplete="off">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-key"></i> Password</label>
+                    <input type="password" id="password" placeholder="Enter admin password" autocomplete="off">
+                </div>
+                
+                <button type="button" class="login-btn" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> Login to Admin Panel
+                </button>
+                
+                <div style="margin-top: 20px; text-align: center; color: var(--gray); font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> Contact system administrator for credentials
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel (Hidden until login) -->
+    <div id="adminPanel" class="admin-panel">
+        <!-- Admin Header -->
+        <header class="admin-header">
+            <div class="container header-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-boxes"></i>
+                    <span>HomeStock Admin</span>
+                </a>
+                <div class="admin-actions">
+                    <div class="admin-nav">
+                        <a href="index.html" target="_blank"><i class="fas fa-eye"></i> View Site</a>
+                        <a href="#logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Status Message -->
+            <div id="statusMessage" class="status-message"></div>
+
+            <!-- Dashboard -->
+            <div class="dashboard">
+                <h2><i class="fas fa-tachometer-alt"></i> Product Dashboard</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-number" id="totalProducts">0</div>
+                        <div class="stat-label">Total Products</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="stat-number" id="kitchenProducts">0</div>
+                        <div class="stat-label">Kitchen Items</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-number">KES</div>
+                        <div class="stat-label">Currency</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-number">UNLIMITED</div>
+                        <div class="stat-label">Product Space</div>
+                    </div>
+                </div>
+
+                <!-- Add Product Form -->
+                <div class="admin-form">
+                    <h3 class="admin-title"><i class="fas fa-plus-circle"></i> Add New Kitchen Product</h3>
+                    
+                    <form id="productForm">
+                        <div class="form-row">
+                            <div class="form-control">
+                                <label for="productName">Product Name *</label>
+                                <input type="text" id="productName" placeholder="e.g., Cooking Oil, Spices, Utensils" required>
+                            </div>
+                            
+                            <div class="form-control">
+                                <label for="productPrice">Price (KES) *</label>
+                                <input type="number" id="productPrice" placeholder="e.g., 1500" min="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-control">
+                                <label for="productCategory">Category *</label>
+                                <select id="productCategory" required>
+                                    <option value="Kitchen Essentials" selected>Kitchen Essentials</option>
+                                    <option value="Cooking Oil">Cooking Oil</option>
+                                    <option value="Spices & Herbs">Spices & Herbs</option>
+                                    <option value="Utensils">Utensils</option>
+                                    <option value="Food Storage">Food Storage</option>
+                                    <option value="Cleaning Supplies">Cleaning Supplies</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-control">
+                                <label for="productTag">Special Tag</label>
+                                <select id="productTag">
+                                    <option value="">None</option>
+                                    <option value="Best Seller">Best Seller</option>
+                                    <option value="New Arrival">New Arrival</option>
+                                    <option value="On Sale">On Sale</option>
+                                    <option value="Limited Stock">Limited Stock</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-control full-width">
+                                <label for="productDescription">Description *</label>
+                                <textarea id="productDescription" placeholder="Describe the product features, benefits, and specifications..." required></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-control full-width">
+                                <label for="productImage">Product Photo *</label>
+                                <div class="file-upload-container">
+                                    <label for="productImageFile" class="file-upload-label">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span style="font-weight: 600; margin-bottom: 5px;">Click to upload product photo</span>
+                                        <span style="font-size: 0.9rem; color: var(--gray);">Supports JPG, PNG, GIF (Max 5MB)</span>
+                                    </label>
+                                    <input type="file" id="productImageFile" class="file-upload-input" accept="image/*" required>
+                                </div>
+                                
+                                <div class="image-preview" id="imagePreview">
+                                    <img id="previewImage" class="preview-image" src="" alt="Preview">
+                                    <button type="button" class="remove-image" onclick="removeImage()">
+                                        <i class="fas fa-trash"></i> Remove Image
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-control">
+                                <label for="productRating">Rating (1-5)</label>
+                                <input type="number" id="productRating" min="1" max="5" step="0.1" value="4.5">
+                            </div>
+                            
+                            <div class="form-control">
+                                <label for="productStock">Initial Stock</label>
+                                <input type="number" id="productStock" min="0" value="100" placeholder="Available quantity">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-rocket"></i> Add Product Now
+                            </button>
+                            <button type="reset" class="btn btn-outline" onclick="clearForm()">
+                                <i class="fas fa-redo"></i> Clear Form
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="addSampleProduct()">
+                                <i class="fas fa-magic"></i> Add Sample
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Recent Products -->
+                <div class="products-section">
+                    <h3 style="color: var(--dark); margin: 40px 0 20px;">
+                        <i class="fas fa-history"></i> All Products (Unlimited Storage)
+                    </h3>
+                    <div id="recentProducts" class="products-list">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // ADMIN LOGIN SYSTEM
+        // ============================================
+        
+        // Admin credentials (DO NOT CHANGE)
+        const ADMIN_CREDENTIALS = {
+            username: "admin",
+            password: "homestock2024"
+        };
+        
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorDiv = document.getElementById('loginError');
+            
+            // Clear any previous error
+            errorDiv.style.display = 'none';
+            
+            // Check credentials
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                // Successful login
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('liveStatus').style.display = 'flex';
+                
+                // Store login state
+                localStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('loginTime', Date.now().toString());
+                
+                // Initialize admin panel
+                initAdminPanel();
+                
+                // Clear password field
+                document.getElementById('password').value = '';
+                
+            } else {
+                // Failed login
+                errorDiv.style.display = 'block';
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }
+        }
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                document.getElementById('adminPanel').style.display = 'none';
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('liveStatus').style.display = 'none';
+                
+                // Clear login state
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('loginTime');
+                
+                // Clear form fields
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            }
+        }
+        
+        // Check if already logged in
+        window.addEventListener('load', function() {
+            const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+            const loginTime = parseInt(localStorage.getItem('loginTime') || '0');
+            const currentTime = Date.now();
+            const sessionDuration = 2 * 60 * 60 * 1000; // 2 hours
+            
+            if (isLoggedIn && (currentTime - loginTime) < sessionDuration) {
+                // Auto-login if session is valid
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('liveStatus').style.display = 'flex';
+                initAdminPanel();
+            }
+            
+            // Auto-logout after session expires
+            if (isLoggedIn && (currentTime - loginTime) >= sessionDuration) {
+                logout();
+            }
+        });
+        
+        // ============================================
+        // PRODUCT MANAGEMENT SYSTEM WITH IMAGE UPLOAD
+        // ============================================
+        
+        let allProducts = [];
+        let currentImageBase64 = '';
+        
+        function initAdminPanel() {
+            // Load existing products
+            loadProducts();
+            
+            // Set up form submission
+            document.getElementById('productForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addNewProduct();
+            });
+            
+            // Set up image upload preview
+            document.getElementById('productImageFile').addEventListener('change', function(e) {
+                handleImageUpload(e);
+            });
+            
+            // Auto-focus on first field
+            document.getElementById('productName').focus();
+        }
+        
+        // Handle image upload and preview
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            const previewImage = document.getElementById('previewImage');
+            
+            if (file) {
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showMessage('Image size must be less than 5MB', 'error');
+                    event.target.value = '';
+                    return;
+                }
+                
+                // Check file type
+                const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (!validTypes.includes(file.type)) {
+                    showMessage('Please upload a valid image (JPG, PNG, GIF)', 'error');
+                    event.target.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Store as base64
+                    currentImageBase64 = e.target.result;
+                    
+                    // Show preview
+                    previewImage.src = currentImageBase64;
+                    preview.style.display = 'block';
+                    
+                    // Scroll to preview
+                    preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Remove selected image
+        function removeImage() {
+            currentImageBase64 = '';
+            document.getElementById('productImageFile').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('previewImage').src = '';
+        }
+        
+        // Clear form
+        function clearForm() {
+            document.getElementById('productForm').reset();
+            removeImage();
+            document.getElementById('productCategory').value = "Kitchen Essentials";
+            document.getElementById('productRating').value = "4.5";
+            document.getElementById('productStock').value = "100";
+        }
+        
+        function loadProducts() {
+            // Load from localStorage
+            const storedProducts = JSON.parse(localStorage.getItem('websiteProducts')) || [];
+            
+            // Filter for valid products
+            allProducts = storedProducts.filter(product => {
+                return product && product.name && product.price && product.category;
+            });
+            
+            // Sort by newest first
+            allProducts.sort((a, b) => (b.id || 0) - (a.id || 0));
+            
+            // Update stats
+            updateStats();
+            
+            // Show recent products
+            showAllProducts();
+        }
+        
+        function updateStats() {
+            // Count kitchen products
+            const kitchenCount = allProducts.filter(p => 
+                p.category === "Kitchen Essentials" || 
+                p.category === "kitchen" ||
+                p.name.toLowerCase().includes('kitchen')
+            ).length;
+            
+            // Update display
+            document.getElementById('totalProducts').textContent = allProducts.length;
+            document.getElementById('kitchenProducts').textContent = kitchenCount;
+        }
+        
+        function addNewProduct() {
+            // Get form values
+            const productData = {
+                name: document.getElementById('productName').value.trim(),
+                price: parseFloat(document.getElementById('productPrice').value),
+                category: document.getElementById('productCategory').value,
+                tag: document.getElementById('productTag').value,
+                description: document.getElementById('productDescription').value.trim(),
+                image: currentImageBase64, // Store as base64
+                rating: parseFloat(document.getElementById('productRating').value) || 4.5,
+                stock: parseInt(document.getElementById('productStock').value) || 100,
+                reviews: 0, // Start with 0 reviews
+                timestamp: Date.now()
+            };
+            
+            // Validate
+            if (!productData.name || !productData.price || !productData.description) {
+                showMessage('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            if (productData.price <= 0) {
+                showMessage('Price must be greater than 0', 'error');
+                return;
+            }
+            
+            if (!currentImageBase64) {
+                showMessage('Please upload a product photo', 'error');
+                return;
+            }
+            
+            // Generate unique ID
+            productData.id = Date.now();
+            
+            // Check for duplicate products
+            const duplicate = allProducts.find(p => 
+                p.name.toLowerCase() === productData.name.toLowerCase() && 
+                p.category === productData.category
+            );
+            
+            if (duplicate) {
+                if (confirm(`"${productData.name}" already exists. Do you want to update it instead?`)) {
+                    // Update existing product
+                    const index = allProducts.findIndex(p => p.id === duplicate.id);
+                    allProducts[index] = {...duplicate, ...productData};
+                    showMessage(`✅ "${productData.name}" updated successfully!`, 'success');
+                } else {
+                    return;
+                }
+            } else {
+                // Add to products array (at beginning for newest first)
+                allProducts.unshift(productData);
+                showMessage(`✅ "${productData.name}" added successfully! It's now LIVE on the website.`, 'success');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('websiteProducts', JSON.stringify(allProducts));
+            
+            // Also save to sessionStorage for redundancy
+            sessionStorage.setItem('websiteProducts', JSON.stringify(allProducts));
+            
+            // BROADCAST NEW PRODUCT FOR LIVE UPDATES
+            broadcastProduct(productData);
+            
+            // Update UI
+            updateStats();
+            showAllProducts();
+            
+            // Reset form
+            clearForm();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Log for debugging
+            console.log('New product added:', productData);
+            console.log('Total products now:', allProducts.length);
+        }
+        
+        function broadcastProduct(product) {
+            try {
+                // Method 1: Save with timestamp to trigger storage event
+                const broadcastData = {
+                    type: 'NEW_PRODUCT',
+                    product: product,
+                    timestamp: Date.now()
+                };
+                
+                localStorage.setItem('product_broadcast', JSON.stringify(broadcastData));
+                
+                // Method 2: Set a flag that main page checks
+                localStorage.setItem('last_product_update', Date.now().toString());
+                
+                // Method 3: Dispatch storage event manually (works in same browser)
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'websiteProducts',
+                    newValue: JSON.stringify(allProducts)
+                }));
+                
+                // Method 4: Set a special notification
+                localStorage.setItem('new_product_notification', JSON.stringify({
+                    id: product.id,
+                    name: product.name,
+                    time: Date.now()
+                }));
+                
+                console.log('Product broadcasted for live update');
+                
+            } catch (error) {
+                console.log('Broadcast error:', error);
+            }
+        }
+        
+        function showAllProducts() {
+            const container = document.getElementById('recentProducts');
+            
+            if (allProducts.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 8px;">
+                        <i class="fas fa-utensils" style="font-size: 3rem; color: #ccc; margin-bottom: 20px;"></i>
+                        <h4 style="color: var(--gray);">No products added yet</h4>
+                        <p>Add your first kitchen product using the form above!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            allProducts.forEach(product => {
+                const imageSrc = product.image || 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+                
+                html += `
+                    <div class="product-item">
+                        <img src="${imageSrc}" 
+                             alt="${product.name}" class="product-image">
+                        <div class="product-info">
+                            <h4>${product.name} ${product.tag ? `<span style="background: var(--secondary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; margin-left: 8px;">${product.tag}</span>` : ''}</h4>
+                            <p>${product.description.substring(0, 80)}${product.description.length > 80 ? '...' : ''}</p>
+                            <div class="product-price">KSh ${product.price.toLocaleString('en-KE')}</div>
+                            <div style="font-size: 0.8rem; color: var(--gray); margin-top: 5px;">
+                                <i class="fas fa-tag"></i> ${product.category} • 
+                                <i class="fas fa-star" style="color: #ffc107;"></i> ${product.rating}/5 •
+                                <i class="fas fa-box" style="color: var(--primary);"></i> Stock: ${product.stock || 100}
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-small btn-primary" onclick="editProduct(${product.id})">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-small btn-outline" onclick="deleteProduct(${product.id})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function addSampleProduct() {
+            const samples = [
+                {
+                    name: "Premium Cooking Oil 5L",
+                    price: 2500,
+                    category: "Cooking Oil",
+                    tag: "Best Seller",
+                    description: "Pure vegetable cooking oil, perfect for frying, baking and all your cooking needs. 5-liter bottle from trusted local brand.",
+                    rating: 4.7
+                },
+                {
+                    name: "Mixed Spices Pack",
+                    price: 850,
+                    category: "Spices & Herbs",
+                    tag: "New Arrival",
+                    description: "Assorted spices including turmeric, cumin, coriander, and chili powder. Perfect for preparing authentic Kenyan dishes.",
+                    rating: 4.5
+                },
+                {
+                    name: "Stainless Steel Cooking Set",
+                    price: 4500,
+                    category: "Utensils",
+                    tag: "",
+                    description: "Complete 5-piece stainless steel cooking set with pots, pans, and cooking spoons. Durable and easy to clean.",
+                    rating: 4.8
+                }
+            ];
+            
+            const sample = samples[Math.floor(Math.random() * samples.length)];
+            
+            // Fill form with sample data
+            document.getElementById('productName').value = sample.name;
+            document.getElementById('productPrice').value = sample.price;
+            document.getElementById('productCategory').value = sample.category;
+            document.getElementById('productTag').value = sample.tag;
+            document.getElementById('productDescription').value = sample.description;
+            document.getElementById('productRating').value = sample.rating;
+            
+            showMessage("Sample product loaded. Upload a photo and click 'Add Product Now' to publish it live!", 'success');
+        }
+        
+        function editProduct(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (product) {
+                // Fill form with product data
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productCategory').value = product.category;
+                document.getElementById('productTag').value = product.tag || "";
+                document.getElementById('productDescription').value = product.description;
+                document.getElementById('productRating').value = product.rating || 4.5;
+                document.getElementById('productStock').value = product.stock || 100;
+                
+                // If product has image, show it
+                if (product.image && product.image.startsWith('data:image')) {
+                    currentImageBase64 = product.image;
+                    document.getElementById('previewImage').src = product.image;
+                    document.getElementById('imagePreview').style.display = 'block';
+                }
+                
+                showMessage(`Editing "${product.name}" - Update values and submit`, 'success');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        function deleteProduct(productId) {
+            if (confirm('Are you sure you want to delete this product? It will be removed from the website immediately.')) {
+                allProducts = allProducts.filter(p => p.id !== productId);
+                localStorage.setItem('websiteProducts', JSON.stringify(allProducts));
+                updateStats();
+                showAllProducts();
+                showMessage('Product deleted successfully', 'success');
+            }
+        }
+        
+        function showMessage(message, type = 'success') {
+            const messageDiv = document.getElementById('statusMessage');
+            messageDiv.textContent = message;
+            messageDiv.className = `status-message ${type}`;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Listen for Enter key in login form
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
+                if (e.target.id === 'username' || e.target.id === 'password') {
+                    login();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
