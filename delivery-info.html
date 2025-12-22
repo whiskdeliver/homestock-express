@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Information - HomeStock Express</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #2a6b3b;
+            --primary-light: #3a8b4b;
+            --secondary: #ff7b00;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #6c757d;
+            --border: #eaeaea;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .logo span {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: normal;
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #f0f9f0;
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 25px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 107, 59, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #ff8c00;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(42, 107, 59, 0.9), rgba(58, 139, 75, 0.8)), url('https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .page-title {
+            color: var(--primary);
+            margin: 40px 0 20px;
+            font-size: 2.2rem;
+            text-align: center;
+        }
+
+        .page-subtitle {
+            color: var(--gray);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Delivery Cards */
+        .delivery-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .delivery-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+
+        .delivery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .delivery-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .delivery-card h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .delivery-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Map Section */
+        .map-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 50px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .map-title {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .towns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .town-item {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .town-item:hover {
+            background: #e9f5e9;
+            transform: translateX(5px);
+        }
+
+        .town-item i {
+            color: var(--primary);
+        }
+
+        .town-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .town-distance {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-left: auto;
+        }
+
+        /* Delivery Zones */
+        .zones-section {
+            margin: 50px 0;
+        }
+
+        .zone-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .zone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .zone-title {
+            color: var(--dark);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .zone-price {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .zone-desc {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .zone-towns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .zone-town-tag {
+            background: #e9f5e9;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: 50px 0;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #f0f9f0;
+        }
+
+        .faq-question h4 {
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .faq-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-answer.active {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            margin-top: 15px;
+        }
+
+        .contact-info div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .contact-info i {
+            color: var(--secondary);
+            width: 20px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 12px;
+            margin: 50px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .delivery-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .towns-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .zone-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .zone-price {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .towns-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-boxes"></i>
+                HomeStock Express
+                <span>- Delivery Information</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="delivery-info.html" class="active"><i class="fas fa-shipping-fast"></i> Delivery</a>
+                <a href="admin.html" target="_blank"><i class="fas fa-lock"></i> Admin</a>
+                <a href="checkout.html"><i class="fas fa-shopping-cart"></i> Checkout</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1><i class="fas fa-shipping-fast"></i> Same-Day Delivery Across Kenya</h1>
+            <p>Get your kitchen essentials delivered fresh and fast to your doorstep. We cover all major towns with reliable, timely delivery service.</p>
+            <a href="index.html" class="btn btn-secondary" style="font-size: 1.1rem;">
+                <i class="fas fa-shopping-basket"></i> Order Now for Delivery
+            </a>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- Page Title -->
+        <h1 class="page-title">Delivery Information & Coverage Areas</h1>
+        <p class="page-subtitle">We deliver fresh kitchen essentials including cooking oil, spices, utensils, and more to homes and businesses across Kenya.</p>
+
+        <!-- Delivery Information Cards -->
+        <div class="delivery-cards">
+            <div class="delivery-card">
+                <i class="fas fa-clock"></i>
+                <h3>Same-Day Delivery</h3>
+                <p>Order before 2:00 PM for same-day delivery in all covered areas. Orders placed after 2:00 PM will be delivered first thing the next morning.</p>
+                <p><strong>Delivery Hours:</strong> 8:00 AM - 8:00 PM daily</p>
+            </div>
+
+            <div class="delivery-card">
+                <i class="fas fa-money-bill-wave"></i>
+                <h3>Delivery Charges</h3>
+                <p>Free delivery for orders over KSh 3,000. For orders below this amount, delivery charges vary by zone:</p>
+                <ul style="margin-top: 10px; padding-left: 20px; color: var(--gray);">
+                    <li>Zone 1 (Nairobi): KSh 200</li>
+                    <li>Zone 2 (Major towns): KSh 300-500</li>
+                    <li>Zone 3 (Outskirts): KSh 500-800</li>
+                </ul>
+            </div>
+
+            <div class="delivery-card">
+                <i class="fas fa-phone-volume"></i>
+                <h3>Delivery Process</h3>
+                <p>1. Place your order through checkout<br>
+                   2. Make payment to 0104 619 596<br>
+                   3. WhatsApp confirmation to 0789 50 3762<br>
+                   4. Receive delivery time confirmation<br>
+                   5. Track your delivery in real-time</p>
+            </div>
+        </div>
+
+        <!-- Map of Coverage Areas -->
+        <div class="map-section">
+            <h2 class="map-title"><i class="fas fa-map-marked-alt"></i> We Deliver To These Major Towns</h2>
+            
+            <div class="towns-grid">
+                <!-- Central Kenya -->
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Nairobi CBD</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Westlands</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Karen/Langata</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Thika</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Kiambu</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Limuru</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+
+                <!-- Rift Valley -->
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Nakuru</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Eldoret</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Naivasha</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Kericho</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Bomet</span>
+                    <span class="town-distance">Next-day</span>
+                </div>
+
+                <!-- Western Kenya -->
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Kisumu</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Kakamega</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Bungoma</span>
+                    <span class="town-distance">Next-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Busia</span>
+                    <span class="town-distance">Next-day</span>
+                </div>
+
+                <!-- Coastal Region -->
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Mombasa</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Malindi</span>
+                    <span class="town-distance">Next-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Kilifi</span>
+                    <span class="town-distance">Next-day</span>
+                </div>
+
+                <!-- Eastern Kenya -->
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Machakos</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Kitui</span>
+                    <span class="town-distance">Next-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Embu</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+
+                <!-- Satellite Towns -->
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Kitengela</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Ruiru</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Athi River</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+                <div class="town-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="town-name">Ngong</span>
+                    <span class="town-distance">Same-day</span>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 20px; color: var(--gray);">
+                <i class="fas fa-info-circle"></i> <strong>Don't see your town?</strong> Contact us at 0789 50 3762 to check if we deliver to your area.
+            </p>
+        </div>
+
+        <!-- Delivery Zones -->
+        <div class="zones-section">
+            <h2 class="page-title">Delivery Zones & Pricing</h2>
+            
+            <div class="zone-card">
+                <div class="zone-header">
+                    <div class="zone-title">Zone 1: Nairobi Metropolitan</div>
+                    <div class="zone-price">KSh 200</div>
+                </div>
+                <p class="zone-desc">Central Nairobi and immediate suburbs. Same-day delivery guaranteed for orders before 2 PM.</p>
+                <div class="zone-towns">
+                    <span class="zone-town-tag">Nairobi CBD</span>
+                    <span class="zone-town-tag">Westlands</span>
+                    <span class="zone-town-tag">Kileleshwa</span>
+                    <span class="zone-town-tag">Kilimani</span>
+                    <span class="zone-town-tag">Upper Hill</span>
+                    <span class="zone-town-tag">Karen</span>
+                    <span class="zone-town-tag">Langata</span>
+                    <span class="zone-town-tag">South B/C</span>
+                    <span class="zone-town-tag">Embakasi</span>
+                    <span class="zone-town-tag">Dandora</span>
+                </div>
+            </div>
+
+            <div class="zone-card">
+                <div class="zone-header">
+                    <div class="zone-title">Zone 2: Major Cities & Towns</div>
+                    <div class="zone-price">KSh 300-500</div>
+                </div>
+                <p class="zone-desc">Major urban centers across Kenya. Same-day delivery for most areas when ordered before 2 PM.</p>
+                <div class="zone-towns">
+                    <span class="zone-town-tag">Mombasa</span>
+                    <span class="zone-town-tag">Kisumu</span>
+                    <span class="zone-town-tag">Nakuru</span>
+                    <span class="zone-town-tag">Eldoret</span>
+                    <span class="zone-town-tag">Thika</span>
+                    <span class="zone-town-tag">Naivasha</span>
+                    <span class="zone-town-tag">Kericho</span>
+                    <span class="zone-town-tag">Kakamega</span>
+                    <span class="zone-town-tag">Machakos</span>
+                    <span class="zone-town-tag">Embu</span>
+                </div>
+            </div>
+
+            <div class="zone-card">
+                <div class="zone-header">
+                    <div class="zone-title">Zone 3: Satellite Towns</div>
+                    <div class="zone-price">KSh 200-300</div>
+                </div>
+                <p class="zone-desc">Towns within Nairobi's immediate outskirts. Same-day delivery with slightly extended cutoff times.</p>
+                <div class="zone-towns">
+                    <span class="zone-town-tag">Kitengela</span>
+                    <span class="zone-town-tag">Ruiru</span>
+                    <span class="zone-town-tag">Athi River</span>
+                    <span class="zone-town-tag">Ngong</span>
+                    <span class="zone-town-tag">Kiserian</span>
+                    <span class="zone-town-tag">Limuru</span>
+                    <span class="zone-town-tag">Kiambu Town</span>
+                    <span class="zone-town-tag">Juja</span>
+                </div>
+            </div>
+
+            <div class="zone-card">
+                <div class="zone-header">
+                    <div class="zone-title">Zone 4: Outskirts & Regional Centers</div>
+                    <div class="zone-price">KSh 500-800</div>
+                </div>
+                <p class="zone-desc">Further towns with next-day delivery. Orders placed before 2 PM delivered next morning.</p>
+                <div class="zone-towns">
+                    <span class="zone-town-tag">Malindi</span>
+                    <span class="zone-town-tag">Kilifi</span>
+                    <span class="zone-town-tag">Bungoma</span>
+                    <span class="zone-town-tag">Busia</span>
+                    <span class="zone-town-tag">Bomet</span>
+                    <span class="zone-town-tag">Kitui</span>
+                    <span class="zone-town-tag">Nyeri</span>
+                    <span class="zone-town-tag">Meru</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="page-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>What are your delivery hours?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We deliver daily from 8:00 AM to 8:00 PM. Same-day delivery is available for orders placed before 2:00 PM. Orders after 2:00 PM will be scheduled for next morning delivery.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>How do I track my delivery?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>After confirming your payment via WhatsApp (0789 50 3762), our delivery team will provide you with an estimated delivery time. You'll receive updates via WhatsApp as your order progresses through preparation and delivery stages.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>Do you deliver on weekends and holidays?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We deliver 7 days a week, including weekends and most public holidays. Our delivery hours may be slightly adjusted on major holidays, which will be communicated in advance.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>What if I'm not available during delivery?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our delivery team will contact you 30 minutes before arrival. If you're unavailable, you can:
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>Specify a safe drop-off location</li>
+                        <li>Authorize someone else to receive</li>
+                        <li>Reschedule for a more convenient time</li>
+                    </ul>
+                    We offer one free rescheduling per order.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>How are perishable items handled during delivery?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>All perishable kitchen items are packed in insulated bags with ice packs to maintain freshness. Our delivery vehicles are equipped to handle temperature-sensitive products, ensuring they arrive in perfect condition.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>What's your delivery radius?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We cover all major towns listed above. If your specific area isn't listed, please contact us at 0789 50 3762 to check availability. We're constantly expanding our delivery network!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2>Ready to Get Your Kitchen Essentials Delivered?</h2>
+            <p>Order now and experience fast, reliable delivery of fresh kitchen products straight to your doorstep.</p>
+            <a href="index.html" class="btn btn-secondary" style="background: white; color: var(--primary); font-size: 1.1rem; padding: 15px 30px;">
+                <i class="fas fa-shopping-basket"></i> Shop Kitchen Products
+            </a>
+            <a href="checkout.html" class="btn" style="background: transparent; border: 2px solid white; color: white; font-size: 1.1rem; padding: 15px 30px; margin-left: 15px;">
+                <i class="fas fa-shopping-cart"></i> Proceed to Checkout
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-boxes"></i> HomeStock Express</h3>
+                    <p>Fast delivery of kitchen essentials across Kenya. Fresh products, reliable service, same-day delivery in major towns.</p>
+                    <p>We specialize in cooking oils, spices, utensils, and all kitchen supplies for homes and businesses.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3><i class="fas fa-shipping-fast"></i> Delivery Hours</h3>
+                    <p><strong>Monday - Sunday:</strong> 8:00 AM - 8:00 PM</p>
+                    <p><strong>Same-Day Cutoff:</strong> 2:00 PM</p>
+                    <p><strong>Free Delivery:</strong> Orders over KSh 3,000</p>
+                    <p><strong>Delivery Zones:</strong> See detailed zones above</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3><i class="fas fa-headset"></i> Contact Delivery Team</h3>
+                    <p>For delivery inquiries, tracking, or special requests:</p>
+                    <div class="contact-info">
+                        <div>
+                            <i class="fas fa-phone"></i>
+                            <span>0789 50 3762</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-envelope"></i>
+                            <span>deliverwhisk@gmail.com</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-clock"></i>
+                            <span>7:00 AM - 9:00 PM Daily</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Payment: 0104 619 596</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2024 HomeStock Express. Fast delivery of kitchen essentials across Kenya.</p>
+                <p style="margin-top: 5px;">All prices in Kenyan Shillings (KES). Delivery available in major towns nationwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle Function
+        function toggleFAQ(questionElement) {
+            const answer = questionElement.nextElementSibling;
+            const icon = questionElement.querySelector('.faq-icon');
+            
+            // Toggle active class
+            answer.classList.toggle('active');
+            
+            // Rotate icon
+            if (answer.classList.contains('active')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+            
+            // Close other FAQs (optional)
+            // const allAnswers = document.querySelectorAll('.faq-answer');
+            // allAnswers.forEach(otherAnswer => {
+            //     if (otherAnswer !== answer && otherAnswer.classList.contains('active')) {
+            //         otherAnswer.classList.remove('active');
+            //         otherAnswer.previousElementSibling.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+            //     }
+            // });
+        }
+
+        // Auto-open first FAQ
+        document.addEventListener('DOMContentLoaded', function() {
+            // Open first FAQ by default
+            const firstFAQ = document.querySelector('.faq-question');
+            if (firstFAQ) {
+                toggleFAQ(firstFAQ);
+            }
+        });
+
+        // Highlight current day delivery towns
+        document.addEventListener('DOMContentLoaded', function() {
+            const sameDayTowns = document.querySelectorAll('.town-item');
+            sameDayTowns.forEach(town => {
+                const distanceText = town.querySelector('.town-distance').textContent;
+                if (distanceText === 'Same-day') {
+                    town.style.borderLeft = '3px solid #2a6b3b';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
